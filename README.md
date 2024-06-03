@@ -18,6 +18,7 @@
     - [Test Coverage](#test-coverage)
 - [Misc](#misc)
 - [Audit Scope Details](#audit-scope-details)
+- [Known issues](#known-issues)
 
 ## About
 
@@ -87,7 +88,7 @@ If you can't or don't want to run and install locally, you can work with this re
 
 ## Testing
 
-Set the `RPC_URL_MAINNET` environment variable with the URL of a mainnet RPC node. It's used for tests that fork Ethereum mainnet state.
+Set the `**RPC_URL_MAINNET**` environment variable with the URL of a mainnet RPC node. It's used for tests that fork Ethereum mainnet state.
 
 Then run:
 

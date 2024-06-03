@@ -43,12 +43,21 @@ import {VaultGuardianToken} from "../dao/VaultGuardianToken.sol";
 contract VaultGuardiansBase is AStaticTokenData, IVaultData {
     using SafeERC20 for IERC20;
 
+    // @audit-info error message not used anywhere
     error VaultGuardiansBase__NotEnoughWeth(uint256 amount, uint256 amountNeeded);
+
     error VaultGuardiansBase__NotAGuardian(address guardianAddress, IERC20 token);
+
+    // @audit-info error message not used anywhere
     error VaultGuardiansBase__CantQuitGuardianWithNonWethVaults(address guardianAddress);
+
+
     error VaultGuardiansBase__CantQuitWethWithThisFunction();
     error VaultGuardiansBase__TransferFailed();
+
+    // @audit-info error message not used anywhere
     error VaultGuardiansBase__FeeTooSmall(uint256 fee, uint256 requiredFee);
+
     error VaultGuardiansBase__NotApprovedToken(address token);
 
     /*//////////////////////////////////////////////////////////////
@@ -77,8 +86,14 @@ contract VaultGuardiansBase is AStaticTokenData, IVaultData {
     //////////////////////////////////////////////////////////////*/
     event GuardianAdded(address guardianAddress, IERC20 token);
     event GaurdianRemoved(address guardianAddress, IERC20 token);
+
+    // @audit-info event not used anywhere
     event InvestedInGuardian(address guardianAddress, IERC20 token, uint256 amount);
+
+    // @audit-info event not used anywhere
     event DinvestedFromGuardian(address guardianAddress, IERC20 token, uint256 amount);
+
+    
     event GuardianUpdatedHoldingAllocation(address guardianAddress, IERC20 token);
 
     /*//////////////////////////////////////////////////////////////

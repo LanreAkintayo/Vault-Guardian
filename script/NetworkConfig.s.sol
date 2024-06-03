@@ -26,6 +26,7 @@ contract NetworkConfig is Script {
         }
     }
 
+    // q- usdc is using 6 decimals. I hope that it is noted
     function getMainnetEthConfig() public pure returns (Config memory) {
         return Config({
             aavePool: 0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2,
