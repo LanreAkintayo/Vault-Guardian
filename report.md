@@ -73,13 +73,13 @@ In the PoS model, proposers know well in advance if they will propose one or con
 <details><summary>2 Found Instances</summary>
 
 
-- Found in src/protocol/investableUniverseAdapters/UniswapAdapter.sol [Line: 40](src/protocol/investableUniverseAdapters/UniswapAdapter.sol#L40)
+- Found in src/protocol/investableUniverseAdapters/UniswapAdapter.sol [Line: 54](src/protocol/investableUniverseAdapters/UniswapAdapter.sol#L54)
 
 	```solidity
 	        uint256[] memory amounts = i_uniswapRouter.swapExactTokensForTokens({
 	```
 
-- Found in src/protocol/investableUniverseAdapters/UniswapAdapter.sol [Line: 84](src/protocol/investableUniverseAdapters/UniswapAdapter.sol#L84)
+- Found in src/protocol/investableUniverseAdapters/UniswapAdapter.sol [Line: 108](src/protocol/investableUniverseAdapters/UniswapAdapter.sol#L108)
 
 	```solidity
 	        uint256[] memory amounts = i_uniswapRouter.swapExactTokensForTokens({
@@ -116,13 +116,13 @@ Contracts have owners with privileged rights to perform admin tasks and need to 
 	contract VaultGuardians is Ownable, VaultGuardiansBase {
 	```
 
-- Found in src/protocol/VaultGuardians.sol [Line: 71](src/protocol/VaultGuardians.sol#L71)
+- Found in src/protocol/VaultGuardians.sol [Line: 74](src/protocol/VaultGuardians.sol#L74)
 
 	```solidity
 	    function updateGuardianStakePrice(uint256 newStakePrice) external onlyOwner {
 	```
 
-- Found in src/protocol/VaultGuardians.sol [Line: 82](src/protocol/VaultGuardians.sol#L82)
+- Found in src/protocol/VaultGuardians.sol [Line: 87](src/protocol/VaultGuardians.sol#L87)
 
 	```solidity
 	    function updateGuardianAndDaoCut(uint256 newCut) external onlyOwner {
@@ -139,7 +139,7 @@ ERC20 functions may not behave as expected. For example: return values are not a
 <details><summary>5 Found Instances</summary>
 
 
-- Found in src/protocol/VaultGuardiansBase.sol [Line: 257](src/protocol/VaultGuardiansBase.sol#L257)
+- Found in src/protocol/VaultGuardiansBase.sol [Line: 288](src/protocol/VaultGuardiansBase.sol#L288)
 
 	```solidity
 	        bool succ = token.approve(address(tokenVault), s_guardianStakePrice);
@@ -151,19 +151,19 @@ ERC20 functions may not behave as expected. For example: return values are not a
 	        bool succ = asset.approve(address(i_aavePool), amount);
 	```
 
-- Found in src/protocol/investableUniverseAdapters/UniswapAdapter.sol [Line: 36](src/protocol/investableUniverseAdapters/UniswapAdapter.sol#L36)
+- Found in src/protocol/investableUniverseAdapters/UniswapAdapter.sol [Line: 46](src/protocol/investableUniverseAdapters/UniswapAdapter.sol#L46)
 
 	```solidity
 	        bool succ = token.approve(address(i_uniswapRouter), amountOfTokenToSwap);
 	```
 
-- Found in src/protocol/investableUniverseAdapters/UniswapAdapter.sol [Line: 48](src/protocol/investableUniverseAdapters/UniswapAdapter.sol#L48)
+- Found in src/protocol/investableUniverseAdapters/UniswapAdapter.sol [Line: 63](src/protocol/investableUniverseAdapters/UniswapAdapter.sol#L63)
 
 	```solidity
 	        succ = counterPartyToken.approve(address(i_uniswapRouter), amounts[1]);
 	```
 
-- Found in src/protocol/investableUniverseAdapters/UniswapAdapter.sol [Line: 52](src/protocol/investableUniverseAdapters/UniswapAdapter.sol#L52)
+- Found in src/protocol/investableUniverseAdapters/UniswapAdapter.sol [Line: 71](src/protocol/investableUniverseAdapters/UniswapAdapter.sol#L71)
 
 	```solidity
 	        succ = token.approve(address(i_uniswapRouter), amountOfTokenToSwap + amounts[0]);
@@ -180,7 +180,7 @@ Check for `address(0)` when assigning values to address state variables.
 <details><summary>1 Found Instances</summary>
 
 
-- Found in src/protocol/VaultGuardiansBase.sol [Line: 253](src/protocol/VaultGuardiansBase.sol#L253)
+- Found in src/protocol/VaultGuardiansBase.sol [Line: 282](src/protocol/VaultGuardiansBase.sol#L282)
 
 	```solidity
 	        s_guardians[msg.sender][token] = IVaultShares(address(tokenVault));
@@ -233,19 +233,19 @@ Instead of marking a function as `public`, consider marking it as `external` if 
 	    function deposit(uint256 assets, address receiver)
 	```
 
-- Found in src/protocol/VaultShares.sol [Line: 166](src/protocol/VaultShares.sol#L166)
+- Found in src/protocol/VaultShares.sol [Line: 176](src/protocol/VaultShares.sol#L176)
 
 	```solidity
 	    function rebalanceFunds() public isActive divestThenInvest nonReentrant {}
 	```
 
-- Found in src/protocol/VaultShares.sol [Line: 174](src/protocol/VaultShares.sol#L174)
+- Found in src/protocol/VaultShares.sol [Line: 184](src/protocol/VaultShares.sol#L184)
 
 	```solidity
 	    function withdraw(uint256 assets, address receiver, address owner)
 	```
 
-- Found in src/protocol/VaultShares.sol [Line: 191](src/protocol/VaultShares.sol#L191)
+- Found in src/protocol/VaultShares.sol [Line: 201](src/protocol/VaultShares.sol#L201)
 
 	```solidity
 	    function redeem(uint256 shares, address receiver, address owner)
@@ -262,49 +262,49 @@ Index event fields make the field more quickly accessible to off-chain tools tha
 <details><summary>12 Found Instances</summary>
 
 
-- Found in src/protocol/VaultGuardians.sol [Line: 48](src/protocol/VaultGuardians.sol#L48)
+- Found in src/protocol/VaultGuardians.sol [Line: 49](src/protocol/VaultGuardians.sol#L49)
 
 	```solidity
 	    event VaultGuardians__UpdatedStakePrice(uint256 oldStakePrice, uint256 newStakePrice);
 	```
 
-- Found in src/protocol/VaultGuardians.sol [Line: 49](src/protocol/VaultGuardians.sol#L49)
+- Found in src/protocol/VaultGuardians.sol [Line: 52](src/protocol/VaultGuardians.sol#L52)
 
 	```solidity
 	    event VaultGuardians__UpdatedFee(uint256 oldFee, uint256 newFee);
 	```
 
-- Found in src/protocol/VaultGuardians.sol [Line: 50](src/protocol/VaultGuardians.sol#L50)
+- Found in src/protocol/VaultGuardians.sol [Line: 53](src/protocol/VaultGuardians.sol#L53)
 
 	```solidity
 	    event VaultGuardians__SweptTokens(address asset);
 	```
 
-- Found in src/protocol/VaultGuardiansBase.sol [Line: 78](src/protocol/VaultGuardiansBase.sol#L78)
+- Found in src/protocol/VaultGuardiansBase.sol [Line: 87](src/protocol/VaultGuardiansBase.sol#L87)
 
 	```solidity
 	    event GuardianAdded(address guardianAddress, IERC20 token);
 	```
 
-- Found in src/protocol/VaultGuardiansBase.sol [Line: 79](src/protocol/VaultGuardiansBase.sol#L79)
+- Found in src/protocol/VaultGuardiansBase.sol [Line: 88](src/protocol/VaultGuardiansBase.sol#L88)
 
 	```solidity
 	    event GaurdianRemoved(address guardianAddress, IERC20 token);
 	```
 
-- Found in src/protocol/VaultGuardiansBase.sol [Line: 80](src/protocol/VaultGuardiansBase.sol#L80)
+- Found in src/protocol/VaultGuardiansBase.sol [Line: 91](src/protocol/VaultGuardiansBase.sol#L91)
 
 	```solidity
 	    event InvestedInGuardian(address guardianAddress, IERC20 token, uint256 amount);
 	```
 
-- Found in src/protocol/VaultGuardiansBase.sol [Line: 81](src/protocol/VaultGuardiansBase.sol#L81)
+- Found in src/protocol/VaultGuardiansBase.sol [Line: 94](src/protocol/VaultGuardiansBase.sol#L94)
 
 	```solidity
 	    event DinvestedFromGuardian(address guardianAddress, IERC20 token, uint256 amount);
 	```
 
-- Found in src/protocol/VaultGuardiansBase.sol [Line: 82](src/protocol/VaultGuardiansBase.sol#L82)
+- Found in src/protocol/VaultGuardiansBase.sol [Line: 97](src/protocol/VaultGuardiansBase.sol#L97)
 
 	```solidity
 	    event GuardianUpdatedHoldingAllocation(address guardianAddress, IERC20 token);
@@ -351,19 +351,19 @@ This is a best-practice to protect against reentrancy in other modifiers.
 	        nonReentrant
 	```
 
-- Found in src/protocol/VaultShares.sol [Line: 166](src/protocol/VaultShares.sol#L166)
+- Found in src/protocol/VaultShares.sol [Line: 176](src/protocol/VaultShares.sol#L176)
 
 	```solidity
 	    function rebalanceFunds() public isActive divestThenInvest nonReentrant {}
 	```
 
-- Found in src/protocol/VaultShares.sol [Line: 178](src/protocol/VaultShares.sol#L178)
+- Found in src/protocol/VaultShares.sol [Line: 188](src/protocol/VaultShares.sol#L188)
 
 	```solidity
 	        nonReentrant
 	```
 
-- Found in src/protocol/VaultShares.sol [Line: 195](src/protocol/VaultShares.sol#L195)
+- Found in src/protocol/VaultShares.sol [Line: 205](src/protocol/VaultShares.sol#L205)
 
 	```solidity
 	        nonReentrant
@@ -499,7 +499,7 @@ Consider removing empty blocks.
 <details><summary>1 Found Instances</summary>
 
 
-- Found in src/protocol/VaultShares.sol [Line: 166](src/protocol/VaultShares.sol#L166)
+- Found in src/protocol/VaultShares.sol [Line: 176](src/protocol/VaultShares.sol#L176)
 
 	```solidity
 	    function rebalanceFunds() public isActive divestThenInvest nonReentrant {}
@@ -516,25 +516,25 @@ it is recommended that the definition be removed when custom error is unused
 <details><summary>4 Found Instances</summary>
 
 
-- Found in src/protocol/VaultGuardians.sol [Line: 43](src/protocol/VaultGuardians.sol#L43)
+- Found in src/protocol/VaultGuardians.sol [Line: 44](src/protocol/VaultGuardians.sol#L44)
 
 	```solidity
 	    error VaultGuardians__TransferFailed();
 	```
 
-- Found in src/protocol/VaultGuardiansBase.sol [Line: 46](src/protocol/VaultGuardiansBase.sol#L46)
+- Found in src/protocol/VaultGuardiansBase.sol [Line: 47](src/protocol/VaultGuardiansBase.sol#L47)
 
 	```solidity
 	    error VaultGuardiansBase__NotEnoughWeth(uint256 amount, uint256 amountNeeded);
 	```
 
-- Found in src/protocol/VaultGuardiansBase.sol [Line: 48](src/protocol/VaultGuardiansBase.sol#L48)
+- Found in src/protocol/VaultGuardiansBase.sol [Line: 52](src/protocol/VaultGuardiansBase.sol#L52)
 
 	```solidity
 	    error VaultGuardiansBase__CantQuitGuardianWithNonWethVaults(address guardianAddress);
 	```
 
-- Found in src/protocol/VaultGuardiansBase.sol [Line: 51](src/protocol/VaultGuardiansBase.sol#L51)
+- Found in src/protocol/VaultGuardiansBase.sol [Line: 59](src/protocol/VaultGuardiansBase.sol#L59)
 
 	```solidity
 	    error VaultGuardiansBase__FeeTooSmall(uint256 fee, uint256 requiredFee);

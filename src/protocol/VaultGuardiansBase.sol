@@ -118,8 +118,8 @@ contract VaultGuardiansBase is AStaticTokenData, IVaultData {
         address vgToken
     ) AStaticTokenData(weth, tokenOne, tokenTwo) {
         s_isApprovedToken[weth] = true;
-        s_isApprovedToken[tokenOne] = true;
-        s_isApprovedToken[tokenTwo] = true;
+        s_isApprovedToken[tokenOne] = true; // @note - tokenOne is usdc
+        s_isApprovedToken[tokenTwo] = true; // @note - tokenTwo is link
 
         i_aavePool = aavePool;
         i_uniswapV2Router = uniswapV2Router;
@@ -137,6 +137,8 @@ contract VaultGuardiansBase is AStaticTokenData, IVaultData {
      */
        // q - I didn't see anything like fee in ETHER.
        // @note - This is specifically for weth
+
+       // Users can call the becomeGuardian function without paying ETH
     function becomeGuardian(AllocationData memory wethAllocationData) external returns (address) {
         VaultShares wethVault =
         new VaultShares(IVaultShares.ConstructorData({
