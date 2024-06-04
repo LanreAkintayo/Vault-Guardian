@@ -21,3 +21,44 @@ To become a token guardian, you pay say 10 weth.
 During the process,
 Let's say 25% of the 10 weth 2.5 weth will be for uniswap
 Let's say 25% of the 10 weth 2.5 weth will be for aave
+
+
+
+
+I'm trying to create a weth vault (weth guardian)
+Guardian is the caller of the becomeGuardian() function.
+vault guardian is the contract VaultGuardiansBase.sol
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -34,7 +34,7 @@ To prevent a vault guardian from running off with the funds, the vault guardians
 
 These 2 protocols (plus "none" makes 3) are known as the "investable universe".
 
-The guardian can move funds in and out of these protocols as much as they like, but they cannot move funds to any other address.
+The guardian can move   funds in and out of these protocols as much as they like, but they cannot move funds to any other address.
 
 The goal of a vault guardian, is to move funds in and out of these protocols to gain the most yield. Vault guardians charge a performance fee, the better the guardians do, the larger fee they will earn. 
 

@@ -18,6 +18,7 @@ contract AaveAdapter {
 
     function _aaveInvest(IERC20 asset, uint256 amount) internal {
         bool succ = asset.approve(address(i_aavePool), amount);
+
         if (!succ) {
             revert AaveAdapter__TransferFailed();
         }
@@ -29,6 +30,9 @@ contract AaveAdapter {
         });
     }
 
+    // @note -- Take your liquidity token, give the vault back its asset. The purpose of doing this is just to prevent the asset from staying in the vault unused. 
+
+    // @audit-info The returned value (amountOfAssetReturned) is used for nothing.
     function _aaveDivest(IERC20 token, uint256 amount) internal returns (uint256 amountOfAssetReturned) {
         i_aavePool.withdraw({
             asset: address(token),

@@ -135,6 +135,8 @@ contract VaultGuardiansBase is AStaticTokenData, IVaultData {
      * 
      * @param wethAllocationData the allocation data for the WETH vault
      */
+       // q - I didn't see anything like fee in ETHER.
+       // @note - This is specifically for weth
     function becomeGuardian(AllocationData memory wethAllocationData) external returns (address) {
         VaultShares wethVault =
         new VaultShares(IVaultShares.ConstructorData({
@@ -152,6 +154,11 @@ contract VaultGuardiansBase is AStaticTokenData, IVaultData {
         }));
         return _becomeTokenGuardian(i_weth, wethVault);
     }
+
+
+    
+    // @note - This is for tokenOne (usdc) and tokenTwo (link)
+    // @note - There has to be a vault guardian for weth before there can be a vault guardian for usdc and link.
 
     function becomeTokenGuardian(AllocationData memory allocationData, IERC20 token)
         external
@@ -214,6 +221,8 @@ contract VaultGuardiansBase is AStaticTokenData, IVaultData {
      * See VaultGuardiansBase::quitGuardian()
      * The only difference here, is that this function is for non-WETH vaults
      */
+
+    // @note - You must quit being a guardian before you can remove your weth.
     function quitGuardian(IERC20 token) external onlyGuardian(token) returns (uint256) {
         if (token == i_weth) {
             revert VaultGuardiansBase__CantQuitWethWithThisFunction();
@@ -237,7 +246,10 @@ contract VaultGuardiansBase is AStaticTokenData, IVaultData {
         s_guardians[msg.sender][token] = IVaultShares(address(0));
         emit GaurdianRemoved(msg.sender, token);
         tokenVault.setNotActive();
+
+        // @note - maxReedemable holds the total number of shares of the caller (guardian)
         uint256 maxRedeemable = tokenVault.maxRedeem(msg.sender);
+
         uint256 numberOfAssetsReturned = tokenVault.redeem(maxRedeemable, msg.sender, msg.sender);
         return numberOfAssetsReturned;
     }
@@ -269,10 +281,13 @@ contract VaultGuardiansBase is AStaticTokenData, IVaultData {
         emit GuardianAdded(msg.sender, token);
         i_vgToken.mint(msg.sender, s_guardianStakePrice);
         token.safeTransferFrom(msg.sender, address(this), s_guardianStakePrice);
+
+        // @note - This contract has approved the token vault to spend the guardian stake price (which is 10 weth)
         bool succ = token.approve(address(tokenVault), s_guardianStakePrice);
         if (!succ) {
             revert VaultGuardiansBase__TransferFailed();
         }
+
         uint256 shares = tokenVault.deposit(s_guardianStakePrice, msg.sender);
         if (shares == 0) {
             revert VaultGuardiansBase__TransferFailed();

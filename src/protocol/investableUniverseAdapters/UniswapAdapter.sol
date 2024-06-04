@@ -27,16 +27,30 @@ contract UniswapAdapter is AStaticUSDCData {
     // slither-disable-start reentrancy-eth
     // slither-disable-start reentrancy-benign
     // slither-disable-start reentrancy-events
+
+    // note - Let's say the token is weth and the amount is 25% of that asset (say, 25% of 10 weth = 2.5 weth)
     function _uniswapInvest(IERC20 token, uint256 amount) internal {
+
+        // note - token is weth and couterPartyToken is usdc
         IERC20 counterPartyToken = token == i_weth ? i_tokenOne : i_weth;
+
         // We will do half in WETH and half in the token
+        
+        // note - 1.25 weth is the amountOfTokenToSwap
         uint256 amountOfTokenToSwap = amount / 2;
+
+        // note - pathArray = [weth, usdc]
         s_pathArray = [address(token), address(counterPartyToken)];
 
+        // note - Weth Vault is approving uniswap router to spend 2.5 weth (remaining 2.5 weth in the contract)
         bool succ = token.approve(address(i_uniswapRouter), amountOfTokenToSwap);
         if (!succ) {
             revert UniswapAdapter__TransferFailed();
         }
+
+        // note - Swapping weth to usdc (2.5 weth will be taken out of the contract and the worth in usdc will be sent to  the contract.)
+
+        // note amounts = [2.5 weth, 200 usdc]
         uint256[] memory amounts = i_uniswapRouter.swapExactTokensForTokens({
             amountIn: amountOfTokenToSwap,
             amountOutMin: 0,
@@ -45,16 +59,22 @@ contract UniswapAdapter is AStaticUSDCData {
             deadline: block.timestamp
         });
 
+        // note - At this point, I now have (let' say 2.5 weth = 200 usdc) 200 usdc in the contract and 2.5 weth
         succ = counterPartyToken.approve(address(i_uniswapRouter), amounts[1]);
+
+        
         if (!succ) {
             revert UniswapAdapter__TransferFailed();
         }
+
+        // note - Approving the contract to spend 2.5weth + 2.5 weth = 5 weth (whereas, the contract only has 2.5 weth and 200 usdc)
         succ = token.approve(address(i_uniswapRouter), amountOfTokenToSwap + amounts[0]);
         if (!succ) {
             revert UniswapAdapter__TransferFailed();
         }
 
         // amounts[1] should be the WETH amount we got back
+        // q - Why are you trying to add liquidity with 5 weth with 200 usdc
         (uint256 tokenAmount, uint256 counterPartyTokenAmount, uint256 liquidity) = i_uniswapRouter.addLiquidity({
             tokenA: address(token),
             tokenB: address(counterPartyToken),
@@ -68,6 +88,8 @@ contract UniswapAdapter is AStaticUSDCData {
         emit UniswapInvested(tokenAmount, counterPartyTokenAmount, liquidity);
     }
 
+
+    // @ note - This will send the liquidity token back to uniswap, in return, the vault will get back the asset and weth. The weth is then converted to asset. 
     function _uniswapDivest(IERC20 token, uint256 liquidityAmount) internal returns (uint256 amountOfAssetReturned) {
         IERC20 counterPartyToken = token == i_weth ? i_tokenOne : i_weth;
 
@@ -80,6 +102,8 @@ contract UniswapAdapter is AStaticUSDCData {
             to: address(this),
             deadline: block.timestamp
         });
+
+        // @note - We are basically trying to convert back to the asset.
         s_pathArray = [address(counterPartyToken), address(token)];
         uint256[] memory amounts = i_uniswapRouter.swapExactTokensForTokens({
             amountIn: counterPartyTokenAmount,

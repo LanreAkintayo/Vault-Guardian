@@ -137,10 +137,16 @@ contract VaultShares is ERC4626, IVaultShares, AaveAdapter, UniswapAdapter, Reen
             revert VaultShares__DepositMoreThanMax(assets, maxDeposit(receiver));
         }
 
+        // note - The upcoming guardian is depositing 10 weth and the share that corresponds to the 10 weth will be determine by the function previewDeposit()
         uint256 shares = previewDeposit(assets);
         _deposit(_msgSender(), receiver, assets, shares);
 
+        // note - At this point, 10 weth has been deposited to the contract.
+
+        // note if shares is 100, 0.1% of thes shares goes to the msg.sender + its original share
         _mint(i_guardian, shares / i_guardianAndDaoCut);
+
+        // note 0.1% of the shares goes to the VaultGuardianBase contract. (meaning that whenever anybody tries to become a vault guardian, the vault guardian contract will receive 0.1% of the shares of that upcoming guardian.)
         _mint(i_vaultGuardians, shares / i_guardianAndDaoCut);
 
         _investFunds(assets);
@@ -148,7 +154,11 @@ contract VaultShares is ERC4626, IVaultShares, AaveAdapter, UniswapAdapter, Reen
     }
 
     function _investFunds(uint256 assets) private {
+
+        // note Let's say 25% of the assets is allocated for uniswap
         uint256 uniswapAllocation = (assets * s_allocationData.uniswapAllocation) / ALLOCATION_PRECISION;
+
+        // note Let's say 25% of the assets is allocated for aave
         uint256 aaveAllocation = (assets * s_allocationData.aaveAllocation) / ALLOCATION_PRECISION;
 
         emit FundsInvested();
