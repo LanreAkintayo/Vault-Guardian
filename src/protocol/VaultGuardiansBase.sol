@@ -79,6 +79,8 @@ contract VaultGuardiansBase is AStaticTokenData, IVaultData {
 
     // The guardian's address mapped to the asset, mapped to the allocation data
     mapping(address guardianAddress => mapping(IERC20 asset => IVaultShares vaultShares)) private s_guardians;
+
+    //@audit-low, if the token is approved, we will still not be able to create a vault for it which basically means that this mapping is useless.
     mapping(address token => bool approved) private s_isApprovedToken;
 
     /*//////////////////////////////////////////////////////////////
@@ -160,6 +162,7 @@ contract VaultGuardiansBase is AStaticTokenData, IVaultData {
 
     
     // @note - This is for tokenOne (usdc) and tokenTwo (link)
+    // @note - Before you can call this becomeTokenGuardian(), you must have stake some weth (10 weth)
     // @note - There has to be a vault guardian for weth before there can be a vault guardian for usdc and link.
 
     function becomeTokenGuardian(AllocationData memory allocationData, IERC20 token)

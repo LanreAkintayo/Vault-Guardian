@@ -8,8 +8,8 @@ import {UniswapAdapter} from "./investableUniverseAdapters/UniswapAdapter.sol";
 import {DataTypes} from "../vendor/DataTypes.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-contract VaultShares is ERC4626, IVaultShares, AaveAdapter, UniswapAdapter, ReentrancyGuard {
     error VaultShares__DepositMoreThanMax(uint256 amount, uint256 max);
+contract VaultShares is ERC4626, IVaultShares, AaveAdapter, UniswapAdapter, ReentrancyGuard {
     error VaultShares__NotGuardian();
     error VaultShares__NotVaultGuardianContract();
     error VaultShares__AllocationNot100Percent(uint256 totalAllocation);
@@ -143,10 +143,10 @@ contract VaultShares is ERC4626, IVaultShares, AaveAdapter, UniswapAdapter, Reen
 
         // note - At this point, 10 weth has been deposited to the contract.
 
-        // note if shares is 100, 0.1% of thes shares goes to the msg.sender + its original share
+        // note if shares is 100, 0.1% of thes shares goes to the guardian
         _mint(i_guardian, shares / i_guardianAndDaoCut);
 
-        // note 0.1% of the shares goes to the VaultGuardianBase contract. (meaning that whenever anybody tries to become a vault guardian, the vault guardian contract will receive 0.1% of the shares of that upcoming guardian.)
+        // note 0.1% of the shares goes to the VaultGuardianBase contract. (meaning that whenever anybody deposits to the vault , the vault guardian contract will receive 0.1% of the shares.)
         _mint(i_vaultGuardians, shares / i_guardianAndDaoCut);
 
         _investFunds(assets);

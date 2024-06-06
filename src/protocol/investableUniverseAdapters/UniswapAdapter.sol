@@ -89,7 +89,7 @@ contract UniswapAdapter is AStaticUSDCData {
     }
 
 
-    // @ note - This will send the liquidity token back to uniswap, in return, the vault will get back the asset and weth. The weth is then converted to asset. 
+    // @note - This will send the liquidity token back to uniswap, in return, the vault will get back the asset and weth. The weth is then converted to asset. 
     function _uniswapDivest(IERC20 token, uint256 liquidityAmount) internal returns (uint256 amountOfAssetReturned) {
         IERC20 counterPartyToken = token == i_weth ? i_tokenOne : i_weth;
 
